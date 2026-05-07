@@ -1,0 +1,27 @@
+[submodule "visualizer/frontend"]
+	path = visualizer/frontend
+	url = git@github.com:extremexp-HORIZON/vis-frontend.git
+[submodule "engine/engine"]
+	path = engine/engine
+	url = git@github.com:extremexp-HORIZON/extremexp-experimentation-engine.git
+[submodule "editor/portal"]
+	path = editor/portal
+	url = git@github.com:extremexp-HORIZON/extremexp-portal.git
+[submodule "storage/dal"]
+	path = storage/dal
+	url = git@github.com:extremexp-HORIZON/extremexp-dal.git
+[submodule "engine/fs"]
+	path = engine/fs
+	url = git@github.com:extremexp-HORIZON/extremexp-fs.git
+[submodule "editor/ide"]
+	path = editor/ide
+	url = git@github.com:extremexp-HORIZON/extremexp-ide.git
+[submodule "storage/dms"]
+	path = storage/dms
+	url = git@github.com:extremexp-HORIZON/extremexp-dms.git
+[submodule "model/dsl"]
+	path = model/dsl
+	url = git@github.com:extremexp-HORIZON/extremexp-dsl-framework.git
+[submodule "model/metamodel"]
+	path = model/metamodel
+	url = git@github.com:extremexp-HORIZON/extremexp-workflow-metamodel.git
