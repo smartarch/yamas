@@ -44,7 +44,7 @@ Use this section as a map of the repository. For setup, configuration, environme
 ### Portal
 This is the main component that starts the user portal, where users can sign in, open the graphical editor, and access the platform entry point for experiments and workflows. Read the service README for setup and usage details.
 
-Path: [editor/portal](editor/portal/)
+Path: [editor/portal](editor/portal/README.md)
 
 ### IDE
 This is the textual editing environment for the DSL. It combines a web-based VS Code instance with the language server used to validate and assist workflow authoring. Read the service README for setup and usage details.
