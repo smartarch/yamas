@@ -1,176 +1,92 @@
 # YAMAS
-YAMAS: Yet Another Machine Learning Automation System
 
-# 🛠️ YAMAS Platform Setup
+YAMAS, Yet Another Machine Learning Automation System, is organized into five main areas: editor, model, storage, engine, and visualizer. This repository contains both end-user applications and internal services that are started either with Docker Compose or directly with language-specific tooling.
 
-This platform is a full development and visualization suite built on Docker Compose. It integrates a language server, editor, file storage, APIs, UI frontends, and backend services—all containerized and connected in a unified environment.
+## First Step
 
-## 🚀 Quick Start
-
-To set up the entire platform, just run:
+Initialize all git submodules before working with any service in this repository. Each service is maintained as a submodule, so the repository will be incomplete until submodules are fetched.
 
 ```bash
-docker compose up -d
-````
-
-This command builds and launches all services in the background.
-
-## 🌐 Main Access Points
-
-You can access the following UIs and services from your browser:
-
-| Port | Service       | Description                        |
-| ---- | ------------- | ---------------------------------- |
-| 8000 | Portal        | Web portal main entry point        |
-| 8001 | VSCode Server | Web-based IDE with custom DSL      |
-| 8002 | Visualizer UI | Frontend for the experiment viewer |
-
----
-
-## 🧱 Services Overview
-
-### 1. `lang-server`
-
-* **Context:** `./editor/dsl/`
-* **Port:** `5007`
-* **Purpose:** Custom DSL language server for code analysis/autocompletion in the IDE.
-* **Volumes:**
-
-  * `./logs` for server logs
-  * `./workspaces` for shared workspace access
-
----
-
-### 2. `vscode`
-
-* **Context:** `./editor/vscode/`
-* **Port:** `8001` (mapped from internal 8080)
-* **Environment:**
-
-  * Connects to `lang-server` internally
-* **Purpose:** Web-based VSCode IDE with pre-integrated language server
-
----
-
-### 3. `fs`
-
-* **Context:** `./storage/fs/`
-* **Port:** `8005` (mapped from internal 5000)
-* **Purpose:** File service backend for handling workspace files
-* **Depends On:** `vscode`
-
----
-
-### 4. `elasticsearch`
-
-* **Image:** `elasticsearch:8.13.0`
-* **Port:** `9200`
-* **Purpose:** Search and indexing service for data analysis layer (DAL)
-* **Volumes:** Persists data in `dal_data` volume
-
----
-
-### 5. `dal`
-
-* **Context:** `./dal/`
-* **Port:** `8004` (mapped from internal 5000)
-* **Purpose:** Python (Flask) backend that queries Elasticsearch for data analytics
-* **Depends On:** `elasticsearch`
-* **Environment:**
-
-  * Connects to Elasticsearch on the Docker network
-
----
-
-### 6. `vis-api`
-
-* **Context:** `./visualizer/backend/`
-* **Port:** `8003` (should be explicitly mapped in your config)
-* **Purpose:** Backend for the visualization tool
-* **Volumes:**
-
-  * `.env` for environment configs
-  * `.output` for storing run outputs
-* **Restart Policy:** `unless-stopped`
-
-> **Note:** You may want to explicitly map this port like `"8003:8080"` if needed externally.
-
----
-
-### 7. `vis-front`
-
-* **Context:** `./visualizer/frontend/`
-* **Port:** `8002` (mapped from internal 80)
-* **Purpose:** UI for the visualizer, connected to `vis-api`
-* **Depends On:** `vis-api`
-
----
-
-### 8. `mongo`
-
-* **Image:** `mongo:4.4.6`
-* **Exposed Port:** `27017` (internal only)
-* **Purpose:** Persistent NoSQL database
-* **Credentials:**
-
-  * Username: `admin`
-  * Password: `admin`
-
----
-
-### 9. `portal`
-
-* **Context:** `./portal/web-app/`
-* **Port:** `8000` (mapped from internal 7001)
-* **Purpose:** Public-facing entry to the overall platform
-
----
-
-## 🗂️ Volumes
-
-| Volume       | Description                       |
-| ------------ | --------------------------------- |
-| `dal_data`   | Persistent Elasticsearch data     |
-| `mongo_data` | Persistent MongoDB database files |
-
----
-
-## 🌐 Networking
-
-All services are connected via the custom Docker bridge network `yamas`, allowing them to communicate using service names (e.g., `lang-server`, `vis-api`, etc.).
-
----
-
-## 🧹 Maintenance
-
-To stop and remove all running services:
-
-```bash
-docker compose down
+git submodule update --init --recursive
 ```
 
-To rebuild everything cleanly:
+## Repository Tree
 
-```bash
-docker compose down -v --remove-orphans
-docker compose up --build -d
+The current top-level layout matches the repository tree below:
+
+```text
+.
+├── LICENSE
+├── README.md
+├── editor
+│   ├── ide
+│   └── portal
+├── engine
+│   ├── engine
+│   └── fs
+├── examples
+│   └── user
+├── model
+│   ├── dsl
+│   └── metamodel
+├── storage
+│   ├── dal
+│   └── dms
+└── visualizer
+    ├── api
+    └── frontend
 ```
 
----
+## Services
 
-## 🐚 Debugging
+Use this section as a map of the repository. For setup, configuration, environment variables, and startup commands, read the README inside each service directory.
 
-To access a container's shell:
+### Portal
+This is the main component that starts the user portal, where users can sign in, open the graphical editor, and access the platform entry point for experiments and workflows. Read the service README for setup and usage details.
 
-```bash
-docker exec -it <container_name> /bin/sh
-```
+Path: [editor/portal](editor/portal/)
 
----
+### IDE
+This is the textual editing environment for the DSL. It combines a web-based VS Code instance with the language server used to validate and assist workflow authoring. Read the service README for setup and usage details.
 
-## 📌 Notes
+Path: [editor/ide](editor/ide/)
 
-* Make sure port `8003` is mapped for `vis-api` if you need external access.
-* All workspace and log data is shared via mounted volumes (`./workspaces` and `./logs`).
+### Experimentation Engine
+This component executes workflows and experiments across supported backends, manages execution state, and coordinates runtime interaction with storage and data services. Read the service README for setup and usage details.
 
-```
+Path: [engine/engine](engine/engine/)
+
+### Filesystem API
+This component provides a minimal filesystem API for listing directories and creating or updating files inside the configured workspace root. Read the service README for setup and usage details.
+
+Path: [engine/fs](engine/fs/)
+
+### DSL Model
+This component contains the domain-specific language used to describe experiments, workflows, tasks, and data flow in the platform. Read the service README for setup and usage details.
+
+Path: [model/dsl](model/dsl/)
+
+### Workflow Metamodel
+This component defines the EMF-based workflow metamodel that underpins experiment structure, task composition, links, and parameter types. Read the service README for setup and usage details.
+
+Path: [model/metamodel](model/metamodel/)
+
+### Data Abstraction Layer
+This component stores and exposes runtime metadata, experiment results, and related analytics data for the wider platform. Read the service README for setup and usage details.
+
+Path: [storage/dal](storage/dal/)
+
+### Design Model Storage
+This component provides the DMS API used to store and retrieve workflow and experiment models. Read the service README for setup and usage details.
+
+Path: [storage/dms](storage/dms/)
+
+### Visualization API
+This component provides backend APIs for visual analytics and explainability features used by the visualization layer. Read the service README for setup and usage details.
+
+Path: [visualizer/api](visualizer/api/)
+
+### Visualization Frontend
+This component provides the web dashboard for exploring, monitoring, and explaining AI pipelines and experiment outputs. Read the service README for setup and usage details.
+
+Path: [visualizer/frontend](visualizer/frontend/)
