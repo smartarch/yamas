@@ -44,49 +44,49 @@ Use this section as a map of the repository. For setup, configuration, environme
 ### Portal
 This is the main component that starts the user portal, where users can sign in, open the graphical editor, and access the platform entry point for experiments and workflows. Read the service README for setup and usage details.
 
-Path: [editor/portal](editor/portal/)
+Path: `editor/portal`
 
 ### IDE
 This is the textual editing environment for the DSL. It combines a web-based VS Code instance with the language server used to validate and assist workflow authoring. Read the service README for setup and usage details.
 
-Path: [editor/ide](editor/ide/)
+Path: `editor/ide`
 
 ### Experimentation Engine
 This component executes workflows and experiments across supported backends, manages execution state, and coordinates runtime interaction with storage and data services. Read the service README for setup and usage details.
 
-Path: [engine/engine](engine/engine/)
+Path: `engine/engine`
 
 ### Filesystem API
 This component provides a minimal filesystem API for listing directories and creating or updating files inside the configured workspace root. Read the service README for setup and usage details.
 
-Path: [engine/fs](engine/fs/)
+Path: `engine/fs`
 
 ### DSL Model
 This component contains the domain-specific language used to describe experiments, workflows, tasks, and data flow in the platform. Read the service README for setup and usage details.
 
-Path: [model/dsl](model/dsl/)
+Path: `model/dsl`
 
 ### Workflow Metamodel
 This component defines the EMF-based workflow metamodel that underpins experiment structure, task composition, links, and parameter types. Read the service README for setup and usage details.
 
-Path: [model/metamodel](model/metamodel/)
+Path: `model/metamodel`
 
 ### Data Abstraction Layer
 This component stores and exposes runtime metadata, experiment results, and related analytics data for the wider platform. Read the service README for setup and usage details.
 
-Path: [storage/dal](storage/dal/)
+Path: `storage/dal`
 
 ### Design Model Storage
 This component provides the DMS API used to store and retrieve workflow and experiment models. Read the service README for setup and usage details.
 
-Path: [storage/dms](storage/dms/)
+Path: `storage/dms`
 
 ### Visualization API
 This component provides backend APIs for visual analytics and explainability features used by the visualization layer. Read the service README for setup and usage details.
 
-Path: [visualizer/api](visualizer/api/)
+Path: `visualizer/api`
 
 ### Visualization Frontend
 This component provides the web dashboard for exploring, monitoring, and explaining AI pipelines and experiment outputs. Read the service README for setup and usage details.
 
-Path: [visualizer/frontend](visualizer/frontend/)
+Path: `visualizer/frontend`
