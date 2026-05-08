@@ -25,3 +25,6 @@
 [submodule "model/metamodel"]
 	path = model/metamodel
 	url = git@github.com:extremexp-HORIZON/extremexp-workflow-metamodel.git
+[submodule "visualizer/api"]
+	path = visualizer/api
+	url = git@github.com:extremexp-HORIZON/vis-api.git
